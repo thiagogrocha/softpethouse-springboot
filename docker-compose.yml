@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+
+  postgres-container:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=api-domain
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=softpethouse
+    volumes:
+      - /db_data_softpethouse:/var/lib/postgresql/data
+    networks:
+      - pg-network
+    
+  pgadmin-container:
+    image: dpage/pgadmin4
+    ports:
+      - "15432:80"
+    environment: 
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    networks:
+      - pg-network
+
+
+networks: 
+  pg-network:
+    driver: bridge
